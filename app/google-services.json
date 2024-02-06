@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "23672701666",
+    "project_id": "practicaunidad12duckhunt",
+    "storage_bucket": "practicaunidad12duckhunt.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:23672701666:android:a7885e18a7003ef01154bb",
+        "android_client_info": {
+          "package_name": "com.example.practicaunidad12duckhunt"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzQWPFENSdjODtjH3gDmRiXQ3xFC_68XE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

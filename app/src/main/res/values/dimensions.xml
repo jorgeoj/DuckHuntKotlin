@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="tam_titulo">40sp</dimen>
+    <dimen name="tam_texto">11sp</dimen>
+</resources>
