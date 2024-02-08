@@ -1,3 +1,5 @@
 package com.example.practicaunidad12duckhunt
 
-class Usuario (var nombre: String, var puntos: Long) {}
+import java.io.Serializable
+
+class Usuario (var nombre: String, var puntos: Long): Serializable {}

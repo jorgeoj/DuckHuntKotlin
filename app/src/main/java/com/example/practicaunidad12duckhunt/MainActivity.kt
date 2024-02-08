@@ -16,7 +16,6 @@ import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 import java.util.Random
 
-// TODO: Diapositivas 50 y 51 hay dudas
 class MainActivity : AppCompatActivity() {
 
     private lateinit var nick: String
@@ -35,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         intentLaunch=registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result: ActivityResult ->
+            Log.d("iLaunch", "he entrado en el intentLaunch")
             if (result.resultCode == RESULT_OK){
                 val accion = result.data?.extras?.getString("accion")
                 when (accion) {
@@ -138,10 +138,14 @@ class MainActivity : AppCompatActivity() {
         val dialogo = builder.create()
         dialogo.show()
         */
-        transferirDatos()
+
         val intent = Intent(this@MainActivity, RankingActivity::class.java)
         intent.putExtra("nick", nick)
         intent.putExtra("cazados", cazados)
+        transferirDatos()
+        val usuariosSerializable = ArrayList(listaUsuarios)
+        intent.putExtra("listaUsuarios", usuariosSerializable)
+
         startActivity(intent)
     }
 
@@ -183,27 +187,27 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun transferirDatos() {
-        // Insertamos el usuario con los puntos o lo actualizamos si existe
-        var actualizar = false
-        var insertar = true
-        if(listaUsuarios.isNotEmpty()) {
-            for (usuario in listaUsuarios) {
-                if(usuario.nombre.equals(nick)) {
-                    insertar = false
-                    if (usuario.puntos < cazados) {
-                        actualizar = true
-                    }
-                }
-            }
-        }
+    private fun transferirDatos(): Boolean {
+        val usuarioExistente = listaUsuarios.find { it.nombre == nick }
 
-        val jugador = Usuario(nick, cazados)
-        if (actualizar) {
-            actualizarDatos(jugador)
-        }
-        if (insertar) {
-            insertarDatos(jugador)
+        if (usuarioExistente != null) {
+            // El usuario ya existe en la lista
+            if (usuarioExistente.puntos < cazados) {
+                // Actualizar los puntos si la nueva puntuación es mayor
+                usuarioExistente.puntos = cazados
+                actualizarDatos(usuarioExistente)
+                return true
+            }
+            // No es necesario actualizar los puntos si la nueva puntuación es menor o igual
+            return false
+        } else {
+            // El usuario no existe en la lista, así que lo añadimos
+            val nuevoUsuario = Usuario(nick, cazados)
+            listaUsuarios.add(nuevoUsuario)
+            insertarDatos(nuevoUsuario)
+            return false
         }
     }
+
+
 }
